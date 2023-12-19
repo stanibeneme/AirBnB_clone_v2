@@ -6,6 +6,8 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+
+
 class State(BaseModel, Base):
     """Representation of state """
     if getenv('HBNB_TYPE_STORAGE') == 'db':
@@ -16,9 +18,11 @@ class State(BaseModel, Base):
                               backref="states")
     else:
         name = ""
+
     def __init__(self, *args, **kwargs):
         """initializes state"""
         super().__init__(*args, **kwargs)
+
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):

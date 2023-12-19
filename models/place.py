@@ -1,11 +1,12 @@
 #!/usr/bin/python3
-""" holds class Place"""
+""" holds the class Place"""
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, Table, ForeignKey
 from sqlalchemy.orm import relationship
+
 if getenv('HBNB_TYPE_STORAGE') == 'db':
     place_amenity = Table('place_amenity', Base.metadata,
                           Column('place_id',
@@ -18,8 +19,10 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
                                  ForeignKey('amenities.id'),
                                  primary_key=True,
                                  nullable=False))
+
+
 class Place(BaseModel, Base):
-    """Representation of Place """
+    """Representation of the Place """
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'places'
         city_id = Column(String(60),
@@ -64,18 +67,21 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
     def __init__(self, *args, **kwargs):
         """initializes Place"""
         super().__init__(*args, **kwargs)
+
     @property
     def reviews(self):
-        """attribute that returns list of Review instances"""
+        """attribute that returns the list of Review instances"""
         values_review = models.storage.all("Review").values()
         list_review = []
         for review in values_review:
             if review.place_id == self.id:
                 list_review.append(review)
         return list_review
+
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def amenities(self):

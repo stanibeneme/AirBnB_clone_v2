@@ -6,6 +6,8 @@ from models.base_model import BaseModel, Base
 from os import getenv
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String
+
+
 class User(BaseModel, Base):
     """Representation of a user """
     if getenv('HBNB_TYPE_STORAGE') == 'db':
@@ -30,12 +32,15 @@ class User(BaseModel, Base):
         _password = ""
         first_name = ""
         last_name = ""
+
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
+
     @property
     def password(self):
         return self._password
+
     @password.setter
     def password(self, pwd):
         """hashing password values"""
